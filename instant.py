@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from openai import OpenAI
+import os
 
 app = FastAPI()
 
@@ -11,7 +12,7 @@ You are on a website that has just been deployed to production for the first tim
 Please reply with an enthusiastic announcement to welcome visitors to the site, explaining that it is live on production for the first time!
 """
     messages = [{"role": "user", "content": message}]
-    response = client.chat.completions.create(model="gpt-5-nano", messages=messages,api_key="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")
+    response = client.chat.completions.create(model="gpt-5-nano", messages=messages,api_key=os.getenv("OPENAI_API_KEY"))
     reply = response.choices[0].message.content.replace("\n", "<br/>")
     html = f"<html><head><title>Live in an Instant!</title></head><body><p>{reply}</p></body></html>"
     return html
